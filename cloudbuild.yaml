@@ -1,0 +1,48 @@
+steps:
+- id: Docker build
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', '${_REPO_REGION}/${_PROJ_ID}/${_REPO_NAME}/${_SERVICE_NAME}', '.']
+
+- id: Container image push
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '${_REPO_REGION}/${_PROJ_ID}/${_REPO_NAME}/${_SERVICE_NAME}']
+
+- id: Cloud run deploy
+  name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - 'run'
+  - 'deploy'
+  - '${_SERVICE_NAME}'
+  - '--image'
+  - '${_REPO_REGION}/${_PROJ_ID}/${_REPO_NAME}/${_SERVICE_NAME}'
+  - '--port'
+  - '8080'
+  - '--region'
+  - '${_REGION}'
+  - '--platform'
+  - 'managed'
+  - '--allow-unauthenticated'
+  - '--service-account'
+  - '${_SERVICE_ACCOUNT}'
+  - '--max-instances'
+  - '5'
+  - '--timeout'
+  - '60'
+  - '--set-env-vars'
+  - 'INSTANCE_CONNECTION_NAME=sureel-test:us-central1:shiv-test,
+     DB_USER=root,
+     DB_PASS=shiv9039,
+     DB_NAME=test'
+    
+
+images:
+- ${_REPO_REGION}/${_PROJ_ID}/${_REPO_NAME}/${_SERVICE_NAME}
+
+
+substitutions:
+  _REPO_REGION: us-docker.pkg.dev
+  _REPO_NAME: shiv-testing
+  _SERVICE_NAME: dev-web-wellness
+  _REGION: us-central1
+  _PROJ_ID: sureel-test
+  _SERVICE_ACCOUNT: shiv-testing@sureel-test.iam.gserviceaccount.com
