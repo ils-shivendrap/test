@@ -26,13 +26,8 @@ steps:
   - '${_SERVICE_ACCOUNT}'
   - '--max-instances'
   - '5'
-  - '--timeout'
-  - '60'
-  - '--set-env-vars'
-  - 'INSTANCE_CONNECTION_NAME=sureel-test:us-central1:shiv-test,
-     DB_USER=root,
-     DB_PASS=shiv9039,
-     DB_NAME=test'
+
+
     
 
 images:
@@ -42,7 +37,7 @@ images:
 substitutions:
   _REPO_REGION: us-docker.pkg.dev
   _REPO_NAME: shiv-testing
-  _SERVICE_NAME: dev-web-wellness
+  _SERVICE_NAME: gcs-teting
   _REGION: us-central1
   _PROJ_ID: sureel-test
   _SERVICE_ACCOUNT: shiv-testing@sureel-test.iam.gserviceaccount.com
