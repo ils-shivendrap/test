@@ -1,8 +1,17 @@
-FROM python:latest
-RUN mkdir /app
-ADD . /app
-WORKDIR /app
-RUN apt update -y
-RUN apt install build-essential libpoppler-cpp-dev pkg-config python3-dev -y
-RUN pip install -r requirement.txt
-CMD exec gunicorn operations:app  --bind 0.0.0.0:8080 
+# Use the official Node.js image.
+FROM node:18
+
+# Set the working directory
+WORKDIR /usr/src/app
+
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy the application code
+COPY . .
+
+# Expose the port
+
+# Start the app
+CMD ["npm", "start"]
