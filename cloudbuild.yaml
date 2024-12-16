@@ -35,7 +35,7 @@ images:
 
 
 substitutions:
-  _REPO_REGION: us-docker.pkg.dev
+  _REPO_REGION: us-central1-docker.pkg.dev
   _REPO_NAME: shiv-testing
   _SERVICE_NAME: gcs-teting
   _REGION: us-central1
